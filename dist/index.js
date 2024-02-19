@@ -62,7 +62,7 @@ function convertXlsxToCsv(options) {
       try {
         const { inputFile, outputDir, outputFilename, filter } = options;
         if (!inputFile.endsWith(".xlsx")) {
-          throw new Error("The input file must be an XLSX file");
+          reject(new Error("The input file must be an XLSX file"));
         }
         const workbook = xlsx.readFile(inputFile);
         const sheetName = workbook.SheetNames[0];
@@ -78,19 +78,9 @@ function convertXlsxToCsv(options) {
             if (filter.hasOwnProperty(key)) {
               newHeader += `${filter[key]},`;
               columnsToKeep.set(col, true);
-              if (key !== filter[key]) {
-                console.info(
-                  `The column "${key}" has been renamed to "${filter[key]}"`
-                );
-              }
-            } else {
-              console.info(
-                `The column "${key}" is not listed in the filter object and will be removed`
-              );
             }
           }
           newHeader = newHeader.slice(0, -1);
-          console.info(`The header has been updated to: ${newHeader}`);
           let newCsv = "";
           for (let row = 0; row < lines.length; row++) {
             if (row === 0) {
@@ -117,7 +107,6 @@ function convertXlsxToCsv(options) {
         )}.csv`;
         fs.writeFileSync(outputFile, csv);
         const outputPath = import_path.default.resolve(outputFile);
-        console.info(`Output file: ${outputPath}`);
         resolve({
           outputPath
         });

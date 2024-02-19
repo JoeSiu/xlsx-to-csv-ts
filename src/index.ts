@@ -2,18 +2,18 @@ import * as xlsx from "xlsx";
 import * as fs from "fs";
 import path from "path";
 
-interface Filter {
+export interface Filter {
   [key: string]: string;
 }
 
-interface ConvertOptions {
+export interface ConvertOptions {
   inputFile: string;
   outputDir: string;
   outputFilename?: string;
   filter?: Filter;
 }
 
-interface ConvertResult {
+export interface ConvertResult {
   outputPath: string;
 }
 

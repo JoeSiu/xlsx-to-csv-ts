@@ -12,4 +12,4 @@ interface ConvertResult {
 }
 declare function convertXlsxToCsv(options: ConvertOptions): Promise<ConvertResult>;
 
-export { convertXlsxToCsv };
+export { type ConvertOptions, type ConvertResult, type Filter, convertXlsxToCsv };
