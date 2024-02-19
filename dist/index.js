@@ -56,11 +56,15 @@ module.exports = __toCommonJS(src_exports);
 var xlsx = __toESM(require("xlsx"));
 var fs = __toESM(require("fs"));
 var import_path = __toESM(require("path"));
-function convertXlsxToCsv(options) {
-  return __async(this, null, function* () {
+function convertXlsxToCsv(_0) {
+  return __async(this, arguments, function* ({
+    inputFile,
+    outputDir = "./",
+    outputFilename,
+    filter
+  }) {
     return new Promise((resolve, reject) => {
       try {
-        const { inputFile, outputDir, outputFilename, filter } = options;
         if (!inputFile.endsWith(".xlsx")) {
           throw new Error("The input file must be an XLSX file");
         }

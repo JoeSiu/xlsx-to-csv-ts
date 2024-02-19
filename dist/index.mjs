@@ -23,11 +23,15 @@ var __async = (__this, __arguments, generator) => {
 import * as xlsx from "xlsx";
 import * as fs from "fs";
 import path from "path";
-function convertXlsxToCsv(options) {
-  return __async(this, null, function* () {
+function convertXlsxToCsv(_0) {
+  return __async(this, arguments, function* ({
+    inputFile,
+    outputDir = "./",
+    outputFilename,
+    filter
+  }) {
     return new Promise((resolve, reject) => {
       try {
-        const { inputFile, outputDir, outputFilename, filter } = options;
         if (!inputFile.endsWith(".xlsx")) {
           throw new Error("The input file must be an XLSX file");
         }

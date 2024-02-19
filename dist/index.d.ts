@@ -10,6 +10,6 @@ interface ConvertOptions {
 interface ConvertResult {
     outputPath: string;
 }
-declare function convertXlsxToCsv(options: ConvertOptions): Promise<ConvertResult>;
+declare function convertXlsxToCsv({ inputFile, outputDir, outputFilename, filter, }: ConvertOptions): Promise<ConvertResult>;
 
 export { type ConvertOptions, type ConvertResult, type Filter, convertXlsxToCsv };
