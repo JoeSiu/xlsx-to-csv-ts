@@ -5,7 +5,7 @@
   "homepage": "https://github.com/JoeSiu/xlsx-to-csv-ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JoeSiu/xlsx-to-csv-ts"
+    "url": "git+https://github.com/JoeSiu/xlsx-to-csv-ts.git"
   },
   "bugs": {
     "url": "https://github.com/JoeSiu/xlsx-to-csv-ts/issues"
