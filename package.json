@@ -2,7 +2,7 @@
   "name": "xlsx-to-csv-ts",
   "version": "1.0.2",
   "description": "A simple script to convert .xlsx file to .csv file, with the ability to filter / rename columns",
-  "homepage": "https://github.com/JoeSiu/xlsx-to-csv-ts",
+  "homepage": "https://joesiu.github.io/xlsx-to-csv-ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JoeSiu/xlsx-to-csv-ts.git"
