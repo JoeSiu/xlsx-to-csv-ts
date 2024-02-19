@@ -26,7 +26,7 @@ export async function convertXlsxToCsv(
 
       // check if the file is an XLSX file
       if (!inputFile.endsWith(".xlsx")) {
-        throw new Error("The input file must be an XLSX file");
+        reject(new Error("The input file must be an XLSX file"));
       }
 
       // read the XLSX file and get the first worksheet
@@ -56,23 +56,11 @@ export async function convertXlsxToCsv(
             // if yes, append the corresponding value to the new header and mark the column index to keep
             newHeader += `${filter[key]},`;
             columnsToKeep.set(col, true);
-            if (key !== filter[key]) {
-              console.info(
-                `The column "${key}" has been renamed to "${filter[key]}"`,
-              );
-            }
-          } else {
-            // if no, warn to console and skip the column index
-            console.info(
-              `The column "${key}" is not listed in the filter object and will be removed`,
-            );
           }
         }
 
         // remove the trailing comma from the new header
         newHeader = newHeader.slice(0, -1);
-
-        console.info(`The header has been updated to: ${newHeader}`);
 
         // create a new CSV with only the columns to keep
         let newCsv = "";
@@ -120,8 +108,6 @@ export async function convertXlsxToCsv(
 
       // get the output path of the new file
       const outputPath = path.resolve(outputFile);
-
-      console.info(`Output file: ${outputPath}`);
 
       resolve({
         outputPath: outputPath,
