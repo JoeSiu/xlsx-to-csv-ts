@@ -17,13 +17,14 @@ export interface ConvertResult {
   outputPath: string;
 }
 
-export async function convertXlsxToCsv(
-  options: ConvertOptions,
-): Promise<ConvertResult> {
+export async function convertXlsxToCsv({
+  inputFile,
+  outputDir = "./",
+  outputFilename,
+  filter,
+}: ConvertOptions): Promise<ConvertResult> {
   return new Promise((resolve, reject) => {
     try {
-      const { inputFile, outputDir, outputFilename, filter } = options;
-
       // check if the file is an XLSX file
       if (!inputFile.endsWith(".xlsx")) {
         throw new Error("The input file must be an XLSX file");
