@@ -33,7 +33,7 @@ const result = await convertXlsxToCsv({
   inputFile: "./public/sample.xlsx",
   outputFilename: "sample-filtered",
   outputDir: "./public/",
-  filter: { Segment: "segment", Country: "" },
+  filter: { Segment: "segment", Country: "country" },	// Format: { "original column": "renamed column", ... }
 });
 
 console.log(result.outputPath)
