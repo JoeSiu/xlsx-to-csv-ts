@@ -5,7 +5,6 @@ it("output csv", async () => {
   expect(async () => {
     await convertXlsxToCsv({
       inputFile: "./public/sample.xlsx",
-      outputFilename: "sample",
       outputDir: "./public/",
     });
   }).not.toThrowError();
@@ -13,7 +12,7 @@ it("output csv", async () => {
 
 it("output fitered csv", async () => {
   expect(async () => {
-    const result = await convertXlsxToCsv({
+    await convertXlsxToCsv({
       inputFile: "./public/sample.xlsx",
       outputFilename: "sample-filtered",
       outputDir: "./public/",

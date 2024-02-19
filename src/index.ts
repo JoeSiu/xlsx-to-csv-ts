@@ -26,7 +26,7 @@ export async function convertXlsxToCsv(
 
       // check if the file is an XLSX file
       if (!inputFile.endsWith(".xlsx")) {
-        reject(new Error("The input file must be an XLSX file"));
+        throw new Error("The input file must be an XLSX file");
       }
 
       // read the XLSX file and get the first worksheet
