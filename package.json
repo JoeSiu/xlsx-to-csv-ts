@@ -1,6 +1,6 @@
 {
   "name": "xlsx-to-csv-ts",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "A simple script to convert .xlsx file to .csv file, with the ability to filter / rename columns",
   "homepage": "https://github.com/JoeSiu/xlsx-to-csv-ts",
   "repository": {
