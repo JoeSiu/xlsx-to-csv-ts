@@ -62,7 +62,7 @@ function convertXlsxToCsv(options) {
       try {
         const { inputFile, outputDir, outputFilename, filter } = options;
         if (!inputFile.endsWith(".xlsx")) {
-          reject(new Error("The input file must be an XLSX file"));
+          throw new Error("The input file must be an XLSX file");
         }
         const workbook = xlsx.readFile(inputFile);
         const sheetName = workbook.SheetNames[0];
