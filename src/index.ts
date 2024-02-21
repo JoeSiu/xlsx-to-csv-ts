@@ -35,68 +35,44 @@ export async function convertXlsxToCsv({
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
 
-      // convert the XLSX to CSV
-      let csv = xlsx.utils.sheet_to_csv(worksheet);
+      // convert the XLSX to JSON
+      let json = xlsx.utils.sheet_to_json(worksheet);
 
-      // if filter is provided, rename the header row and remove unwanted columns
+      // if filter is provided, rename the keys of the JSON objects and remove unwanted rows
       if (filter) {
-        // split the CSV by line
-        const lines = csv.split("\n");
+        // create a new JSON array to store the filtered data
+        let filteredJson = [];
 
-        // get the original header row and split by comma
-        const header = lines[0].split(",");
+        // iterate over the JSON objects
+        for (let obj of json as Record<string, any>[]) {
+          // create a new object to store the filtered data
+          let filteredObj: Record<string, any> = {};
 
-        // create a new header row and a map of column indices to keep
-        let newHeader = "";
-        const columnsToKeep = new Map<number, boolean>();
-
-        // iterate over the original header and check if it matches any key in the filter object
-        for (let col = 0; col < header.length; col++) {
-          const key = header[col];
-          if (filter.hasOwnProperty(key)) {
-            // if yes, append the corresponding value to the new header and mark the column index to keep
-            newHeader += `${filter[key]},`;
-            columnsToKeep.set(col, true);
-          }
-        }
-
-        // remove the trailing comma from the new header
-        newHeader = newHeader.slice(0, -1);
-
-        // create a new CSV with only the columns to keep
-        let newCsv = "";
-
-        // iterate over the lines and split by comma
-        for (let row = 0; row < lines.length; row++) {
-          // replace the first line of the CSV with the new header
-          if (row === 0) {
-            newCsv += `${newHeader}\n`;
-            continue;
-          }
-
-          const values = lines[row].split(",");
-
-          // create a new line with only the values from the columns to keep
-          let newLine = "";
-
-          // iterate over the values and check the column index
-          for (let i = 0; i < values.length; i++) {
-            if (columnsToKeep.has(i)) {
-              // if the column index is marked to keep, append the value to the new line
-              newLine += `${values[i]},`;
+          // iterate over the keys of the filter object
+          for (let key of Object.keys(filter)) {
+            // check if the JSON object has the key
+            if (obj.hasOwnProperty(key)) {
+              // if yes, copy the value to the new object with the new key
+              filteredObj[filter[key]] = obj[key];
             }
           }
 
-          // remove the trailing comma from the new line
-          newLine = newLine.slice(0, -1);
-
-          // append the new line to the new CSV
-          newCsv += `${newLine}\n`;
+          // check if the new object is not empty
+          if (Object.keys(filteredObj).length > 0) {
+            // if yes, push it to the filtered JSON array
+            filteredJson.push(filteredObj);
+          }
         }
 
-        // replace the CSV with the new CSV
-        csv = newCsv;
+        // replace the JSON with the filtered JSON
+        json = filteredJson;
       }
+
+      // convert the JSON to XLSX
+      let filteredWorksheet = xlsx.utils.json_to_sheet(json);
+
+      // convert the XLSX to CSV
+      let csv = xlsx.utils.sheet_to_csv(filteredWorksheet);
 
       // create a new file
       const outputFile = `${path.join(
