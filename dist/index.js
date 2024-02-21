@@ -71,40 +71,24 @@ function convertXlsxToCsv(_0) {
         const workbook = xlsx.readFile(inputFile);
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
-        let csv = xlsx.utils.sheet_to_csv(worksheet);
+        let json = xlsx.utils.sheet_to_json(worksheet);
         if (filter) {
-          const lines = csv.split("\n");
-          const header = lines[0].split(",");
-          let newHeader = "";
-          const columnsToKeep = /* @__PURE__ */ new Map();
-          for (let col = 0; col < header.length; col++) {
-            const key = header[col];
-            if (filter.hasOwnProperty(key)) {
-              newHeader += `${filter[key]},`;
-              columnsToKeep.set(col, true);
-            }
-          }
-          newHeader = newHeader.slice(0, -1);
-          let newCsv = "";
-          for (let row = 0; row < lines.length; row++) {
-            if (row === 0) {
-              newCsv += `${newHeader}
-`;
-              continue;
-            }
-            const values = lines[row].split(",");
-            let newLine = "";
-            for (let i = 0; i < values.length; i++) {
-              if (columnsToKeep.has(i)) {
-                newLine += `${values[i]},`;
+          let filteredJson = [];
+          for (let obj of json) {
+            let filteredObj = {};
+            for (let key of Object.keys(filter)) {
+              if (obj.hasOwnProperty(key)) {
+                filteredObj[filter[key]] = obj[key];
               }
             }
-            newLine = newLine.slice(0, -1);
-            newCsv += `${newLine}
-`;
+            if (Object.keys(filteredObj).length > 0) {
+              filteredJson.push(filteredObj);
+            }
           }
-          csv = newCsv;
+          json = filteredJson;
         }
+        let filteredWorksheet = xlsx.utils.json_to_sheet(json);
+        let csv = xlsx.utils.sheet_to_csv(filteredWorksheet);
         const outputFile = `${import_path.default.join(
           outputDir,
           outputFilename != null ? outputFilename : import_path.default.basename(inputFile, ".xlsx")
