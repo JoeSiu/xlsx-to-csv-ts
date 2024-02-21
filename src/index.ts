@@ -36,7 +36,7 @@ export async function convertXlsxToCsv({
       const worksheet = workbook.Sheets[sheetName];
 
       // convert the XLSX to JSON
-      let json = xlsx.utils.sheet_to_json(worksheet);
+      let json: Record<string, any>[] = xlsx.utils.sheet_to_json(worksheet);
 
       // if filter is provided, rename the keys of the JSON objects and remove unwanted rows
       if (filter) {
@@ -44,7 +44,7 @@ export async function convertXlsxToCsv({
         let filteredJson = [];
 
         // iterate over the JSON objects
-        for (let obj of json as Record<string, any>[]) {
+        for (let obj of json) {
           // create a new object to store the filtered data
           let filteredObj: Record<string, any> = {};
 
